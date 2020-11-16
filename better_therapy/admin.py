@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import NewUser, Client, Therapist, Supervisor
+from .models import NewUser, Client, Therapist, Appointment
 from django.contrib.auth.models import Group
 
 # #Mine: removed BaseUserAdmin, as I will use views and my own admin panel
 # from .forms import UserAdminCreationForm, UserAdminChangeForm
 # from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-# #Mine: removed BaseUserAdmin, as I will use views and my own admin panel
+#Mine: removed BaseUserAdmin, as I will use views and my own admin panel
 
 # class UserAdmin(BaseUserAdmin):
 #     # The forms to add and change user instances
@@ -41,11 +41,11 @@ admin.site.unregister(Group)
 
 # Register your models here.
 admin.site.register(NewUser)
-#  #Mine: gave up the form so removed UserAdmin
+ #Mine: gave up the form so removed UserAdmin
 # admin.site.register(NewUser, UserAdmin)
 admin.site.register(Client)
 admin.site.register(Therapist)
-admin.site.register(Supervisor)
+admin.site.register(Appointment)
 
 admin.site.unregister(NewUser)
 

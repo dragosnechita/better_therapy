@@ -1,10 +1,10 @@
 # #Mine: removed forms altogether, as I will make a separate admin panel for the app alone
-# from django import forms
-# from django.contrib.auth.forms import ReadOnlyPasswordHashField
-#
-# from better_therapy.models import NewUser, Client, Therapist, Supervisor
-#
-#
+from django import forms
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
+
+from better_therapy.models import NewUser, Client, Therapist
+
+
 # class RegisterForm(forms.ModelForm):
 #     password = forms.CharField(widget=forms.PasswordInput)
 #     password2 = forms.CharField(label='Confirm password', widget=forms.PasswordInput)

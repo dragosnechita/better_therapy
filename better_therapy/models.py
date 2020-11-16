@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.utils import timezone
 
 
 class NewUserManager(BaseUserManager):
@@ -59,13 +60,56 @@ class Client(NewUser):
     l_name = models.CharField(verbose_name='last name', max_length=30)
     ph_num = models.CharField(verbose_name='phone number', max_length=10)
 
+    class Meta:
+        permissions = (
+            ('can_view_client', 'View Client'),
+            ('can_update_client', 'Update Client'),
+            ('can_view_client_detail', 'Client Detail'),
+            ('can_view_appointment', 'Client Appointment'),  # not yet implemented badabeem
+                       )
 
 class Therapist(Client):
     is_therapist = models.BooleanField(default=True)
+    supervisor_id = models.ForeignKey(null=True, to='Supervisor', on_delete=models.SET_NULL, related_name='Supervisor')
+
+    class Meta:
+        permissions = (
+            ('can_view_client', 'View Client'),
+            ('can_update_client', 'Update Client'),
+            ('can_view_client_detail', 'Client Detail'),
+            ('can_add_client', 'Add a client'),
+            ('can_archive_client', 'Archive Client'),  # not yet implemented badabeem
+            ('can_view_client_list', 'View Client List'),
+            ('can_view_therapist_detail', 'View Therapist Detail'),  # not yet implemented badabeem
+            ('can_update_therapist', 'Update Terapist'),# not yet implemented badabeem
+                        )
 
 
 class Supervisor(Therapist):
     is_supervisor = models.BooleanField(default=True)
+
+    class Meta:
+        permissions = (
+            ('can_view_client', 'View Client'),
+            ('can_update_client', 'Update Client'),
+            ('can_view_client_detail', 'Client Detail'),
+            ('can_add_client', 'Add a client'),
+            ('can_archive_client', 'Archive Client'),   # not yet implemented badabeem
+            ('can_view_client_list', 'View Client List'),
+            ('can_add_therapist', 'Add Therapist'),  # not yet implemented badabeem
+            ('can_view_therapist_detail', 'View Therapist Detail'),  # not yet implemented badabeem
+            ('can_update_therapist', 'Update Terapist'),  # not yet implemented badabeem
+            ('can_archive_therapist', 'Archive Therapist'),  # not yet implemented badabeem
+                        )
+
+
+
+class Appointment(models.Model):
+    therapist = models.ForeignKey(to=Therapist, on_delete=models.CASCADE)
+    client = models.ForeignKey(to=Client, on_delete=models.CASCADE, related_name='Client')
+    date_and_time = models.DateTimeField(verbose_name='Date and time',
+                                         default=timezone.now)
+
 
 
 
